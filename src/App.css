@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+/* Force class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-text: var(--text);
+
+  --shadow-card: 0 2px 10px -3px rgba(6, 81, 237, 0.1);
+  --shadow-lift: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+/* Light */
+:root {
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --text: #111827;
+}
+
+/* Dark */
+.dark {
+  --bg: #0f172a;
+  --card: #1f2937;
+  --text: #f3f4f6;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition: none !important;
+}
