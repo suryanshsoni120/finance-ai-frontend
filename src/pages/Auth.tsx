@@ -50,10 +50,21 @@ export default function Auth({ onAuthSuccess }: Props) {
         <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-900 transition-colors p-4">
             <div className="w-full max-w-md bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 transition-all duration-300 ease-out">
 
-                {/* App Branding */}
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">💰 Finance AI</h1>
-                    <p className="text-gray-500 dark:text-gray-400 text-sm">
+                <div className="flex flex-col items-center gap-4 mb-8">
+                    {/* Logo + App Name (INLINE) */}
+                    <div className="flex items-center gap-3">
+                        <img
+                            src="/logo.png"
+                            alt="Finance AI logo"
+                            className="w-10 h-10 object-contain"
+                        />
+                        <h1 className="text-3xl font-bold text-white tracking-tight">
+                            Finance AI
+                        </h1>
+                    </div>
+
+                    {/* Subtitle */}
+                    <p className="text-gray-400 text-sm text-center max-w-sm">
                         Smart expense tracking with AI-powered insights
                     </p>
                 </div>
