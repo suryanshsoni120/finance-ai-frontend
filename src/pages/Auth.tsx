@@ -58,7 +58,7 @@ export default function Auth({ onAuthSuccess }: Props) {
                             alt="Finance AI logo"
                             className="w-10 h-10 object-contain"
                         />
-                        <h1 className="text-3xl font-bold text-white tracking-tight">
+                        <h1 className="text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
                             Finance AI
                         </h1>
                     </div>
