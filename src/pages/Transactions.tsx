@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import API from "../services/api";
-import type { Transaction } from "../types/transaction";
 import { ArrowDownRight, ArrowUpRight, Search, Filter } from "lucide-react";
 import toast from "react-hot-toast";
+import API from "../services/api";
+import type { Transaction } from "../types/transaction";
+import ExportDropdown from "../components/ExportDropdown";
+import { formatDate } from "../services/formatter";
 
 const categoryColor = (category?: string) => {
     switch ((category ?? "").toLowerCase()) {
@@ -205,6 +207,7 @@ export default function Transactions() {
                     placeholder="Max ₹"
                     className="h-11 w-28 px-4 rounded-xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
                 />
+                <ExportDropdown transactions={filteredTransactions} />
             </div>
 
             {/* Table */}
@@ -241,7 +244,7 @@ export default function Transactions() {
                                 {sortedTransactions.map(t => (
                                     <tr key={t._id} className="hover:bg-gray-100/60 dark:hover:bg-slate-700/40">
                                         <td className="px-6 py-4 text-sm text-gray-500">
-                                            {new Date(t.date).toLocaleDateString()}
+                                            {formatDate(t.date)}
                                         </td>
                                         <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
                                             {t.description ?? "—"}
