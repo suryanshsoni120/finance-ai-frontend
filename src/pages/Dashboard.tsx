@@ -6,11 +6,14 @@ import Insights from "../components/Insights";
 import SavingsSummary from "../components/SavingsSummary";
 import AddTransaction from "../components/AddTransaction";
 import type { Summary, CategoryBreakdown } from "../types/analytics";
+import { DEFAULT_INSIGHTS, DEFAULT_SUMMARY } from "../services/default";
 
 export default function Dashboard() {
-  const [summary, setSummary] = useState<Summary | null>(null);
+  const [summary, setSummary] = useState<Summary>(DEFAULT_SUMMARY);
   const [breakdown, setBreakdown] = useState<CategoryBreakdown[]>([]);
-  const [insights, setInsights] = useState<string[]>([]);
+  const [insights, setInsights] = useState<string[]>(DEFAULT_INSIGHTS);
+  const [loading, setLoading] = useState(true);
+  const [aiLoading, setAiLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
   const fetchData = async () => {
@@ -19,22 +22,35 @@ export default function Dashboard() {
     const currentMonth = now.getMonth() + 1; // 1-12
     const currentYear = now.getFullYear();
 
-    const [s, b, i] = await Promise.all([
-      API.get(`/analytics/summary?month=${currentMonth}&year=${currentYear}`),
-      API.get(`/analytics/category-breakdown?month=${currentMonth}&year=${currentYear}`),
-      API.get(`/insights/monthly?month=${currentMonth}&year=${currentYear}`)
-    ]);
+    // CORE DATA
+    try {
+      setLoading(true);
+      const [s, b] = await Promise.all([
+        API.get(`/analytics/summary?month=${currentMonth}&year=${currentYear}`),
+        API.get(`/analytics/category-breakdown?month=${currentMonth}&year=${currentYear}`)
+      ]);
 
-    setSummary(s.data);
-    setBreakdown(b.data);
-    setInsights(i.data.insights);
+      setSummary(s.data || DEFAULT_SUMMARY);
+      setBreakdown(b.data);
+    } finally {
+      setLoading(false);
+    }
+
+    // AI INSIGHTS
+    try {
+      setAiLoading(true);
+      const i = await API.get(`/insights/monthly?month=${currentMonth}&year=${currentYear}`);
+      setInsights(i.data.insights || DEFAULT_INSIGHTS);
+    } catch {
+      setInsights(DEFAULT_INSIGHTS);
+    } finally {
+      setAiLoading(false);
+    }
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  if (!summary) return null;
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">

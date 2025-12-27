@@ -34,19 +34,6 @@ export default function SavingsSummary() {
         );
     }
 
-    const totalSaved = goals.reduce((sum, g) => sum + g.currentAmount, 0);
-    const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
-    const overallProgress = totalTarget > 0 ? Math.round((totalSaved / totalTarget) * 100) : 0;
-
-    // Get top 3 goals by progress percentage
-    const topGoals = [...goals]
-        .map(g => ({
-            ...g,
-            progress: g.targetAmount > 0 ? (g.currentAmount / g.targetAmount) * 100 : 0
-        }))
-        .sort((a, b) => b.progress - a.progress)
-        .slice(0, 3);
-
     if (goals.length === 0) {
         return (
             <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-card">
@@ -70,6 +57,19 @@ export default function SavingsSummary() {
             </div>
         );
     }
+
+    const totalSaved = goals.reduce((sum, g) => sum + g.currentAmount, 0);
+    const totalTarget = goals.reduce((sum, g) => sum + g.targetAmount, 0);
+    const overallProgress = totalTarget > 0 ? Math.round((totalSaved / totalTarget) * 100) : 0;
+
+    // Get top 3 goals by progress percentage
+    const topGoals = [...goals]
+        .map(g => ({
+            ...g,
+            progress: g.targetAmount > 0 ? (g.currentAmount / g.targetAmount) * 100 : 0
+        }))
+        .sort((a, b) => b.progress - a.progress)
+        .slice(0, 3);
 
     return (
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-card space-y-4">

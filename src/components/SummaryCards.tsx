@@ -9,21 +9,21 @@ export default function SummaryCards({ summary }: Props) {
   const cards = [
     {
       label: "Income",
-      value: summary.income,
+      value: summary.income ?? 0,
       color: "text-green-600 dark:text-green-400",
       icon: TrendingUp,
       bg: "from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-900/40"
     },
     {
       label: "Expense",
-      value: summary.expense,
+      value: summary.expense ?? 0,
       color: "text-red-600 dark:text-red-400",
       icon: TrendingDown,
       bg: "from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-900/40"
     },
     {
       label: "Savings",
-      value: summary.savings,
+      value: summary.savings ?? 0,
       color: "text-blue-600 dark:text-blue-400",
       icon: Wallet,
       bg: "from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/40"
