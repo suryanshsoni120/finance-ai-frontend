@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Dashboard from "./pages/Dashboard";
@@ -7,12 +7,26 @@ import Transactions from "./pages/Transactions";
 import Budgets from "./pages/Budgets";
 import Savings from "./pages/Savings";
 import NotFound from "./pages/NotFound";
+import AI_API from "./services/aiApi";
 
 export default function App() {
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
   const [theme, setTheme] = useState<"light" | "dark">(
     (localStorage.getItem("theme") as "light" | "dark") || "light"
   );
+
+  // 🔥 ensures AI warm-up runs only once per session
+  const aiWarmedUp = useRef(false);
+
+  // 🔥 AI SERVICE WARM-UP
+  useEffect(() => {
+    if (!isAuth) return;
+    if (aiWarmedUp.current) return;
+
+    aiWarmedUp.current = true;
+
+    AI_API.get("/health").catch(() => { });
+  }, [isAuth]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -31,6 +45,7 @@ export default function App() {
   const logout = () => {
     localStorage.removeItem("token");
     setIsAuth(false);
+    aiWarmedUp.current = false; // reset for next login
   };
 
   if (!isAuth) {
