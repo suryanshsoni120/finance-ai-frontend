@@ -4,6 +4,7 @@ import EmptyChart from "./EmptyChart";
 
 interface Props {
   data: CategoryBreakdown[];
+  loading?: boolean;
 }
 
 const COLORS = [
@@ -17,8 +18,8 @@ const COLORS = [
   "#6366f1", // Indigo 500
 ];
 
-export default function ExpenseChart({ data }: Props) {
-  if (!data || data.length === 0) {
+export default function ExpenseChart({ data, loading }: Props) {
+  if (loading || !data || data.length === 0) {
     return <EmptyChart />;
   }
   return (

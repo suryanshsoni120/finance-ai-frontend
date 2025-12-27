@@ -66,8 +66,8 @@ export default function Dashboard() {
       <SummaryCards summary={summary} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ExpenseChart data={breakdown} />
-        <Insights insights={insights} />
+        <ExpenseChart data={breakdown} loading={loading} />
+        <Insights insights={insights} loading={aiLoading} />
       </div>
 
       <SavingsSummary />
