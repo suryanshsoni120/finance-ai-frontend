@@ -19,7 +19,22 @@ const COLORS = [
 ];
 
 export default function ExpenseChart({ data, loading }: Props) {
-  if (loading || !data || data.length === 0) {
+  if (loading) {
+    return (
+      <div className="bg-card rounded-2xl p-6 shadow-card dark:shadow-none border border-transparent dark:border-gray-800 h-96 flex flex-col">
+        <h3 className="text-lg font-semibold mb-6 text-gray-900 dark:text-gray-100">
+          Expense Breakdown
+        </h3>
+
+        <div className="flex-1 flex flex-col items-center justify-center text-center">
+          <span className="text-sm text-gray-500 dark:text-gray-400 max-w-xs mx-auto">
+            Loading expense breakdown…
+          </span>
+        </div>
+      </div>
+    );
+  }
+  if (!data || data.length === 0) {
     return <EmptyChart />;
   }
   return (
