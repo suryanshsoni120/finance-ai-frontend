@@ -8,6 +8,7 @@ import Budgets from "./pages/Budgets";
 import Savings from "./pages/Savings";
 import NotFound from "./pages/NotFound";
 import AI_API from "./services/aiApi";
+import ImportStatement from "./pages/ImportStatement";
 
 export default function App() {
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
@@ -58,6 +59,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/transactions" element={<Transactions />} />
+        <Route path="/import" element={<ImportStatement />} />
         <Route path="/budgets" element={<Budgets />} />
         <Route path="/savings" element={<Savings />} />
         <Route path="*" element={<NotFound />} />

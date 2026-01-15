@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { ArrowDownRight, ArrowUpRight, Search, Filter } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowDownRight, ArrowUpRight, Search, Filter, Upload } from "lucide-react";
 import toast from "react-hot-toast";
 import API from "../services/api";
 import type { Transaction } from "../types/transaction";
@@ -135,13 +136,26 @@ export default function Transactions() {
     return (
         <div className="max-w-6xl mx-auto p-6 space-y-6">
             {/* Header */}
-            <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                    Transactions
-                </h1>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                    View and manage your financial history
-                </p>
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+                        Transactions
+                    </h1>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                        View and manage your financial history
+                    </p>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-3">
+                    <Link
+                        to="/import"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-all cursor-pointer"
+                    >
+                        <Upload size={16} />
+                        Import Statement
+                    </Link>
+                </div>
             </div>
 
             {/* Filters */}
