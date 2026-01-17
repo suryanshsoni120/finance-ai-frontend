@@ -137,6 +137,10 @@ export default function Dashboard() {
       .sort((a, b) => b.total - a.total);
   }, [filteredData]);
 
+  const expenseCount = useMemo(() => {
+    return filteredData.filter(t => t.type === "expense").length;
+  }, [filteredData]);
+
   // --- Dynamic Category List ---
   const availableCategories = useMemo(() => {
     const cats = new Set(transactions.map(t => t.category));
@@ -251,7 +255,7 @@ export default function Dashboard() {
       <SummaryCards summary={summary} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <ExpenseChart data={breakdown} loading={loading} />
+        <ExpenseChart data={breakdown} loading={loading} count={expenseCount} />
         {/* Only show Insights if supported or default to empty/message */}
         {filterMode === "month" ? (
           <Insights insights={insights} loading={aiLoading} />
