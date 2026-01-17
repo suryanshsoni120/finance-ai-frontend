@@ -1,22 +1,12 @@
 import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell, Legend } from "recharts";
 import type { CategoryBreakdown } from "../types/analytics";
 import EmptyChart from "./EmptyChart";
+import { getCategoryChartColor } from "../services/category";
 
 interface Props {
   data: CategoryBreakdown[];
   loading?: boolean;
 }
-
-const COLORS = [
-  "#10b981", // Emerald 500
-  "#3b82f6", // Blue 500
-  "#f59e0b", // Amber 500
-  "#8b5cf6", // Violet 500
-  "#ec4899", // Pink 500
-  "#06b6d4", // Cyan 500
-  "#f97316", // Orange 500
-  "#6366f1", // Indigo 500
-];
 
 export default function ExpenseChart({ data, loading }: Props) {
   if (loading) {
@@ -57,10 +47,10 @@ export default function ExpenseChart({ data, loading }: Props) {
               paddingAngle={2}
               stroke="none"
             >
-              {data.map((_, index) => (
+              {data.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
-                  fill={COLORS[index % COLORS.length]}
+                  fill={getCategoryChartColor(entry._id)}
                   stroke="transparent"
                 />
               ))}
