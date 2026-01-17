@@ -1,5 +1,6 @@
 import { Moon, Sun, LogOut, LayoutDashboard, History, PieChart, PiggyBank } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 interface Props {
   onLogout: () => void;
@@ -16,7 +17,7 @@ export default function Header({ onLogout, theme, toggleTheme }: Props) {
     <header className="sticky top-0 z-50 bg-card dark:bg-darkcard shadow-sm border-b border-gray-100 dark:border-gray-800">
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="text-lg font-bold tracking-wide flex items-center gap-2">
-          <img src="/logo.png" alt="Finance AI logo" className="w-8 h-8 object-contain"/>
+          <img src={logo} alt="Finance AI logo" className="w-8 h-8 object-contain"/>
           <span className="hidden sm:inline">Finance AI</span>
         </Link>
 

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import API from "../services/api";
+import logo from "../assets/logo.png";
 
 interface Props {
     onAuthSuccess: () => void;
@@ -54,7 +55,7 @@ export default function Auth({ onAuthSuccess }: Props) {
                     {/* Logo + App Name (INLINE) */}
                     <div className="flex items-center gap-3">
                         <img
-                            src="/logo.png"
+                            src={logo}
                             alt="Finance AI logo"
                             className="w-10 h-10 object-contain"
                         />

@@ -6,21 +6,7 @@ import API from "../services/api";
 import type { Transaction } from "../types/transaction";
 import ExportDropdown from "../components/ExportDropdown";
 import { formatDate } from "../services/formatter";
-
-const categoryColor = (category?: string) => {
-    switch ((category ?? "").toLowerCase()) {
-        case "food":
-            return "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300";
-        case "shopping":
-            return "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300";
-        case "utilities":
-            return "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300";
-        case "salary":
-            return "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300";
-        default:
-            return "bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-gray-300";
-    }
-};
+import { categoryColor, categoryIcon } from "../services/category";
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -254,28 +240,28 @@ export default function Transactions() {
                                 </tr>
                             </thead>
 
-                            <tbody className="divide-y divide-gray-200/60 dark:divide-gray-700/60">
-                                {sortedTransactions.map(t => (
-                                    <tr key={t._id} className="hover:bg-gray-100/60 dark:hover:bg-slate-700/40">
-                                        <td className="px-6 py-4 text-sm text-gray-500">
-                                            {formatDate(t.date)}
-                                        </td>
-                                        <td className="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                            {t.description ?? "—"}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${categoryColor(t.category)}`}>
-                                                {t.category ?? "Other"}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4 text-right font-bold">
-                                            <span className={`inline-flex items-center gap-1 ${t.type === "income" ? "text-green-500" : "text-red-500"}`}>
-                                                {t.type === "income" ? "+" : "-"}₹{Math.abs(t.amount).toLocaleString()}
-                                                {t.type === "income" ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
+                            <tbody className="divide-y divide-slate-700">
+                                {transactions.map(t => {
+                                    const Icon = categoryIcon(t.category);
+                                    return (
+                                        <tr key={t._id} className="hover:bg-slate-700/40">
+                                            <td className="px-6 py-4 text-gray-400">{formatDate(t.date)}</td>
+                                            <td className="px-6 py-4 text-white">{t.description}</td>
+                                            <td className="px-6 py-4">
+                                                <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${categoryColor(t.category)}`}>
+                                                    <Icon size={14} />
+                                                    {t.category}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4 text-right font-bold">
+                                                <span className={`inline-flex items-center gap-1 ${t.type === "income" ? "text-green-400" : "text-red-400"}`}>
+                                                    {t.type === "income" ? "+" : "-"}₹{Math.abs(t.amount).toLocaleString()}
+                                                    {t.type === "income" ? <ArrowUpRight size={16} /> : <ArrowDownRight size={16} />}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>

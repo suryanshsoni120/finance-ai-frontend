@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import type { Transaction } from "../types/transaction";
-import logo from "../../public/logo.png";
+import logo from "../assets/logo.png";
 import { formatDate } from "../services/formatter";
 
 export function exportTransactionsToCSV(transactions: Transaction[], filename = "transactions.csv") {

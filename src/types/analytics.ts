@@ -1,7 +1,7 @@
 export interface Summary {
-    income: number;
-    expense: number;
-    savings: number;
+  income: number;
+  expense: number;
+  savings: number;
 }
 
 export interface CategoryBreakdown {
